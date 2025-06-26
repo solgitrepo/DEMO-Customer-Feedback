@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="progress" style="height: 12px; background-color: #f0f1f5; border-radius: 10px;">
+    <div class="progress-bar progress-bar-striped" role="progressbar"
+        style="width: 50%; background-color: #3ecf8e; border-radius: 10px;
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0.2) 10px,
+                transparent 10px,
+                transparent 20px
+            );"
+        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    </div>
+</div>
+
+
+{% if session.form_data['satisfaction'] == 'Yes' %}
+<div class="text-center mb-4">
+    <label class="language-label">
+        <strong>
+        {% if session['language'] == 'Arabic' %}
+            هل ترغب في مشاركة أي ملاحظات إضافية تتعلق بتجربة تسوقك الأخيرة؟
+        {% else %}
+            Would you like to share any additional feedback related to your recent shopping experience?
+        {% endif %}
+    </strong>
+</label>
+</div>
+{% else %}
+<div class="text-center mb-4">
+    <label class="language-label">
+        <strong>
+        {% if session['language'] == 'Arabic' %}
+            نأسف لإضاعة الفرصة لتزويدك بتجربة تسوق ممتعة لا تتردد في مشاركة أي تعليقات إضافية تتعلق بتجربتك الأخيرة
+        {% else %}
+            We regret having missed the opportunity in providing you with a pleasant shopping experience. Please feel free to share any additional feedback related to your recent experience.
+        {% endif %}
+    </strong>
+</label>
+</div>
+{% endif %}
+
+<div class="d-flex justify-content-center">
+    <form method="POST" class="text-center" style="width: 100%; max-width: 800px;">
+        <div class="mb-3 d-flex justify-content-center">
+            <textarea class="form-control" name="additional_feedback" rows="2"
+                style="width: 100%; max-width: 700px;">{{ existing_feedback }}</textarea>
+        </div>
+</div>
+
+
+
+    <div class="row">
+        {% if session.language == 'Arabic' %}
+            <!-- Arabic: Next on the left, Previous on the right -->
+            <div class="col text-start">
+                <button type="submit" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                    < التالي 
+                </button>
+            </div>
+            <div class="col text-end">
+                <a href="{% if session.form_data['satisfaction'] == 'No' %}
+                            {% if session.form_data['dissatisfaction_reason'] == 'product' %}
+                                {{ url_for('product_feedback') }}
+                            {% elif session.form_data['dissatisfaction_reason'] == 'staff' %}
+                                {{ url_for('staff_feedback') }}
+                            {% elif session.form_data['dissatisfaction_reason'] == 'ambience' %}
+                                {{ url_for('ambience_feedback') }}
+                            {% else %}
+                                {{ url_for('satisfaction_reason') }}
+                            {% endif %}
+                        {% else %}
+                            {{ url_for('satisfaction_reason') }}
+                        {% endif %}"
+                        class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                السابق>
+                </a>
+            </div>
+        {% else %}
+            <!-- English: Previous on the left, Next on the right -->
+            <div class="col text-start">
+                <a href="{% if session.form_data['satisfaction'] == 'No' %}
+                            {% if session.form_data['dissatisfaction_reason'] == 'product' %}
+                                {{ url_for('product_feedback') }}
+                            {% elif session.form_data['dissatisfaction_reason'] == 'staff' %}
+                                {{ url_for('staff_feedback') }}
+                            {% elif session.form_data['dissatisfaction_reason'] == 'ambience' %}
+                                {{ url_for('ambience_feedback') }}
+                            {% else %}
+                                {{ url_for('satisfaction_reason') }}
+                            {% endif %}
+                        {% else %}
+                            {{ url_for('satisfaction_reason') }}
+                        {% endif %}"
+                        class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                    < Previous
+                </a>
+            </div>
+            <div class="col text-end">
+                <button type="submit" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                    Next >
+                </button>
+            </div>
+        {% endif %}
+    </div>
+    
+    
+</form>    
+{% endblock %}
