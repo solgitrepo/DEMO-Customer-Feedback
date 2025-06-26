@@ -8,4 +8,11 @@
 2. Click Sync button to sync the changes from github
 3. In Deployment center, start the application
 
+## database
+- The database is configured in Postgress server
+- Database and SMS credentials are in the .env file
+- Database name: CustomerFeedback
+  Tables: feedback_db, stores, giftcodes
+
+  
 Your application will be up and running !
