@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="progress" style="height: 12px; background-color: #f0f1f5; border-radius: 10px;">
+    <div class="progress-bar progress-bar-striped" role="progressbar"
+        style="width: 8%; background-color: #3ecf8e; border-radius: 10px;
+                background-image: repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0.2) 10px,
+                    transparent 10px,
+                    transparent 20px
+                );"
+        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    </div>
+</div>
+
+
+<div class="text-center mb-4">
+    <label class="language-label">
+    <strong>Please select your preferred language?</strong>
+    </label>
+</div>
+
+<!-- Centering form wrapper -->
+<form method="POST" class="text-center container" style="max-width: 100%;">
+
+    <div class="mb-3 d-flex justify-content-center">
+        <div class="p-3 d-flex align-items-center justify-content-start"
+            style="border: none; background-color: #d6d6d6; width: 100%; max-width: 600px; height: 40px; border-radius: 0px;">
+            <input class="form-check-input me-2" type="radio" name="language" id="arabic" value="Arabic">
+            <label class="form-check-label mb-0" for="arabic">عربي</label>
+            </div>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-center">
+            <div class="p-3 d-flex align-items-center justify-content-start"
+            style="border: none; background-color: #d6d6d6; width: 100%; max-width: 600px; height: 40px; border-radius: 0px;">
+                <input class="form-check-input me-2" type="radio" name="language" id="english" value="English" required>
+                <label class="form-check-label mb-0" for="english" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 500; font-size: 14px;">English</label>
+            </div>
+        </div>
+
+        <div class="col text-end">
+            <button type="submit" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">Next ></button>
+        </div>
+    </form>
+</div>
+{% endblock %}

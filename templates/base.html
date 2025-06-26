@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajmal Feedback Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        
+        .terms-text {
+            font-size: 0.75rem; /* adjust as needed */
+            font-weight: 400;   /* lighter than bold */
+            color: #7a7a7a;     /* soft grey color */
+            line-height: 1.6;
+        }
+        /* Thank you message styling */
+        .thank-you-text {
+            font-size: 0.8rem;
+            font-weight: 200; 
+            color:rgb(125, 122, 122);                    /* Dark, but not black */
+        }
+        .thank-you-header {
+            font-size: 1rem;
+            font-weight: 600;             /* Semi-bold */
+            margin-bottom: 0.5rem;
+        }
+        body {
+            background-color:rgb(241, 239, 233);
+            font-family: Arial, sans-serif;
+        }
+        .language-label {
+            font-size: 17px;
+            color:rgb(92, 92, 95);
+        }
+    
+        .logo-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    
+        .logo-img {
+            max-height: 100px;
+            width: auto;
+        }
+    
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    
+        .btn-primary {
+            background-color: #464eb8;
+            border-color: #464eb8;
+        }
+    
+        .btn-primary:hover {
+            background-color: #3a42a0;
+            border-color: #3a42a0;
+        }
+    
+        .progress {
+            height: 10px;
+            margin-bottom: 30px;
+        }
+    
+        .alert {
+            margin-bottom: 20px;
+        }
+    
+        .option-box {
+            border: none;
+            background-color: #d6d6d6;
+            width: 100%;
+            height: 60px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 1rem;
+        }
+    
+        .option-box + .option-box {
+            margin-top: 16px; /* ✅ ensures vertical gap between stacked boxes */
+        }
+    
+        .option-box input[type="checkbox"],
+        .option-box input[type="radio"] {
+            margin-right: 10px;
+        }
+    
+        .option-box label {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Ajmal Logo" class="logo-img">
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mx-3">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="mx-3">
+        {% block content %}{% endblock %}
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="progress" style="height: 12px; background-color: #f0f1f5; border-radius: 10px;">
+    <div class="progress-bar progress-bar-striped" role="progressbar"
+        style="width: 75%; background-color: #3ecf8e; border-radius: 10px;
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0.2) 10px,
+                transparent 10px,
+                transparent 20px
+            );"
+        aria-valuenow="62.5" aria-valuemin="0" aria-valuemax="100">
+    </div>
+</div>
+
+
+<div class="text-center mb-4">
+    <label class="language-label">
+        <strong>
+    {% if session.language == 'Arabic' %}
+    بناءً على تجربتك الأخيرة، ما مدى احتمالية أن توصي بنا لأصدقائك أو عائلتك أو زملائك؟
+    {% else %}
+    Based on your most recent experience, how likely are you to recommend us to your friends, family or colleagues?
+    {% endif %}
+</strong>
+</label>
+</div>
+
+{% set nps_colors = [
+    '#e35d34',  
+    '#f0683e',  
+    '#fc774e',  
+    '#fc835d',  
+    '#f79577',  
+    '#faa68c',  
+    '#f7b19c',  
+    '#f5e389',  
+    '#e3e186',  
+    '#cbe673',  
+    '#93e046'   
+] %}
+
+<form method="POST" class="text-center" style="max-width: 100%;">
+    <div class="mb-4">
+        <div class="nps-wrapper text-center">
+            <div class="nps-ribbon">
+                {% for i in range(11) %}
+                    <div class="nps-item text-center">
+                        <input class="d-none" type="radio" name="nps" id="nps{{ i }}" value="{{ i }}"
+                            {% if previous_nps is not none and previous_nps == i|string %}checked{% endif %}>
+                        <label class="nps-label" for="nps{{ i }}"
+                            style="background-color: {{ nps_colors[i] }};">
+                            {{ i }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex justify-content-between px-2 small text-muted mt-1 mb-4" style="max-width: 600px; margin: 0 auto;">
+                <div>
+                    {% if session.language == 'Arabic' %}
+                        ليس من المحتمل على الإطلاق
+                    {% else %}
+                        Not at all likely
+                    {% endif %}
+                </div>
+                <div>
+                    {% if session.language == 'Arabic' %}
+                        محتمل للغاية
+                    {% else %}
+                        Extremely Likely
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="row">
+            {% if session.language == 'Arabic' %}
+                <div class="col text-start">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                        < التالي
+                    </button>
+                </div>
+                <div class="col text-end">
+                    <a href="{{ url_for('additional_feedback') }}" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                        السابق >
+                    </a>
+                </div>
+            {% else %}
+                <div class="col text-start">
+                    <a href="{{ url_for('additional_feedback') }}" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                        < Previous
+                    </a>
+                </div>
+                <div class="col text-end">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 4px; box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1); padding: 8px 12px; font-size: 14px;">
+                        Next >
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+<!-- Styles -->
+<style>
+    .nps-ribbon-container {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    
+    .nps-ribbon {
+        display: flex;
+        justify-content: center;
+        max-width: 80%;
+        margin: 0 auto;
+        border: 1px solid #ccc; /* optional outer border */
+    }
+    
+    .nps-item {
+        flex: 1 1 0;
+    }
+    
+    .nps-label {
+        display: block;
+        text-align: center;
+        padding: 10px 0;
+        margin: 0;
+        border-right: 1px solid #fff; /* creates the divider between items */
+        background-color: #e0e0e0;
+        font-weight: normal;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.2s ease-in-out;
+    }
+    
+    .nps-label:last-child {
+        border-right: none;
+    }
+    
+    input[type="radio"]:checked + .nps-label {
+        border: 2px solid #333;
+    }
+    </style>
+    
+{% endblock %}
